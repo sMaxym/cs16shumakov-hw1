@@ -59,6 +59,28 @@ public class TemperatureSeriesAnalysisTest {
         // expect exception here
         seriesAnalysis.average();
     }
+
+    @Test
+    public void testMin() {
+        double[] temperatureSeries = {0, 6, -5, 14};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double expResult = -5;
+
+        double actualResult = seriesAnalysis.min();
+
+        assertEquals(expResult, actualResult, 0.0001);
+    }
+
+    @Test
+    public void testMax() {
+        double[] temperatureSeries = {0, 6, -5, 14};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double expResult = 14;
+
+        double actualResult = seriesAnalysis.max();
+
+        assertEquals(expResult, actualResult, 0.0001);
+    }
     
 
 }

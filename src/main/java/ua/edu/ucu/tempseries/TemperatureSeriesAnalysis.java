@@ -1,5 +1,9 @@
 package ua.edu.ucu.tempseries;
 
+interface FindingPredicat {
+    boolean compare(double a, double b);
+}
+
 public class TemperatureSeriesAnalysis {
 
     private double[] tempSeries;
@@ -19,6 +23,17 @@ public class TemperatureSeriesAnalysis {
         }
     }
 
+    private double predicatFinding(FindingPredicat pred) {
+        checkEmpty();
+        double bestValue = tempSeries[0];
+        for (double val: tempSeries) {
+            if (pred.compare(val, bestValue)) {
+                bestValue = val;
+            }
+        }
+        return bestValue;
+    }
+
     public double average() {
         checkEmpty();
         double avg = 0;
@@ -30,10 +45,11 @@ public class TemperatureSeriesAnalysis {
 
     public double deviation() {
         checkEmpty();
-        double dev = 0, avg = average();
+        double dev = 0, avg = average(), curSummon;
         int serLen = tempSeries.length;
         for (double val: tempSeries) {
-            dev += Math.pow(val - avg, 2);
+            curSummon = Math.pow(val - avg, 2);
+            dev += curSummon;
         }
         dev /= serLen;
         dev = Math.sqrt(dev);
@@ -41,11 +57,13 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double min() {
-        return 0;
+        FindingPredicat pred = (double a, double b) -> (a < b);
+        return predicatFinding(pred);
     }
 
     public double max() {
-        return 0;
+        FindingPredicat pred = (double a, double b) -> (a > b);
+        return predicatFinding(pred);
     }
 
     public double findTempClosestToZero() {
