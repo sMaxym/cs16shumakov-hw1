@@ -23,11 +23,11 @@ public class TemperatureSeriesAnalysis {
         }
     }
 
-    private double predicateFinding(FindingPredicate pred) {
+    private double predicateFinding(FindingPredicate predicate) {
         checkEmpty();
         double bestValue = tempSeries[0];
         for (double val: tempSeries) {
-            if (pred.compare(val, bestValue)) {
+            if (predicate.compare(val, bestValue)) {
                 bestValue = val;
             }
         }
@@ -57,31 +57,45 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double min() {
-        FindingPredicate pred = new FindingPredicate() {
+        FindingPredicate predicate = new FindingPredicate() {
             @Override
             public boolean compare(double a, double b) {
                 return a < b;
             }
         };
-        return predicateFinding(pred);
+        return predicateFinding(predicate);
     }
 
     public double max() {
-        FindingPredicate pred = new FindingPredicate() {
+        FindingPredicate predicate = new FindingPredicate() {
             @Override
             public boolean compare(double a, double b) {
                 return a > b;
             }
         };
-        return predicateFinding(pred);
+        return predicateFinding(predicate);
     }
 
     public double findTempClosestToZero() {
-        return 0;
+        return findTempClosestToValue(0);
     }
 
     public double findTempClosestToValue(double tempValue) {
-        return 0;
+        FindingPredicate predicate = new FindingPredicate() {
+            @Override
+            public boolean compare(double a, double b) {
+                double a_diff = Math.abs(a - tempValue);
+                double b_diff = Math.abs(b - tempValue);
+                if (a_diff == b_diff && a > b) {
+                    return true;
+                }
+                if (a_diff < b_diff) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        return predicateFinding(predicate);
     }
 
     public double[] findTempsLessThen(double tempValue) {
