@@ -34,6 +34,20 @@ public class TemperatureSeriesAnalysis {
         return bestValue;
     }
 
+    private double[] append(double[] values, double... toAppend) {
+        int valLen = values.length;
+        int appendLen = toAppend.length;
+        double[] data = new double[valLen + appendLen];
+        int index = 0;
+        for (int i = 0; i < valLen; ++i, ++index) {
+            data[index] = values[i];
+        }
+        for (int j = 0; j < appendLen; ++j, ++index) {
+            data[index] = toAppend[j];
+        }
+        return data;
+    }
+
     public double average() {
         checkEmpty();
         double avg = 0;
@@ -100,11 +114,23 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double[] findTempsLessThen(double tempValue) {
-        return null;
+        double[] values = {};
+        for (double val: tempSeries) {
+            if (val < tempValue) {
+                values = append(values, val);
+            }
+        }
+        return values;
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
-        return null;
+        double[] values = {};
+        for (double val: tempSeries) {
+            if (val > tempValue) {
+                values = append(values, val);
+            }
+        }
+        return values;
     }
 
     public TempSummaryStatistics summaryStatistics() {
@@ -114,15 +140,7 @@ public class TemperatureSeriesAnalysis {
     public int addTemps(double... temps) {
         int serLen = tempSeries.length;
         int tempsLen = temps.length;
-        double[] data = new double[serLen + tempsLen];
-        int index = 0;
-        for (int i = 0; i < serLen; ++i, ++index) {
-            data[index] = tempSeries[i];
-        }
-        for (int j = 0; j < tempsLen; ++j, ++index) {
-            data[index] = temps[j];
-        }
-        tempSeries = data;
+        tempSeries = append(tempSeries, temps);
         return serLen + tempsLen;
     }
 }

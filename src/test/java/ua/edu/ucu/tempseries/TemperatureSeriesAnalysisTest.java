@@ -105,6 +105,30 @@ public class TemperatureSeriesAnalysisTest {
     }
 
     @Test
+    public void testFindTempsLessThen() {
+        double[] temperatureSeries = {42, -111, 5, -3};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double[] expResult = {-111};
+        double anchor = -53;
+
+        double[] actualResult = seriesAnalysis.findTempsLessThen(anchor);
+
+        assertArrayEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test
+    public void testFindTempsGreaterThen() {
+        double[] temperatureSeries = {42, -111, 5, -3};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double[] expResult = {42, 5};
+        double anchor = 3;
+
+        double[] actualResult = seriesAnalysis.findTempsGreaterThen(anchor);
+
+        assertArrayEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test
     public void testAddTemps() {
         double[] temperatureSeries = {42, -111, 5, -3};
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
