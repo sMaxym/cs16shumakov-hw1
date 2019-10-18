@@ -3,7 +3,7 @@ package ua.edu.ucu.tempseries;
 public class TemperatureSeriesAnalysis {
 
     interface FindingPredicate {
-        boolean compare(double a, double b);
+        boolean compare(final double a, final double b);
     }
 
     private double[] tempSeries;
@@ -73,7 +73,7 @@ public class TemperatureSeriesAnalysis {
     public double min() {
         FindingPredicate predicate = new FindingPredicate() {
             @Override
-            public boolean compare(double a, double b) {
+            public boolean compare(final double a, final double b) {
                 return a < b;
             }
         };
@@ -83,7 +83,7 @@ public class TemperatureSeriesAnalysis {
     public double max() {
         FindingPredicate predicate = new FindingPredicate() {
             @Override
-            public boolean compare(double a, double b) {
+            public boolean compare(final double a, final double b) {
                 return a > b;
             }
         };
@@ -96,22 +96,19 @@ public class TemperatureSeriesAnalysis {
 
     public double findTempClosestToValue(double tempValue) {
         checkEmpty();
-        final double comparingVal = tempValue;
-        FindingPredicate predicate = new FindingPredicate() {
-            @Override
-            public boolean compare(double a, double b) {
-                double a_diff = Math.abs(a - comparingVal);
-                double b_diff = Math.abs(b - comparingVal);
-                if (a_diff == b_diff && a > b) {
-                    return true;
-                }
-                if (a_diff < b_diff) {
-                    return true;
-                }
-                return false;
+        double bestVal = tempSeries[0];
+        double val_diff, best_diff;
+        for (double val: tempSeries) {
+            val_diff = Math.abs(val - tempValue);
+            best_diff = Math.abs(bestVal - tempValue);
+            if (val_diff == best_diff && val > bestVal) {
+                bestVal = val;
             }
-        };
-        return predicateFinding(predicate);
+            if (val_diff < best_diff) {
+                bestVal = val;
+            }
+        }
+        return bestVal;
     }
 
     public double[] findTempsLessThen(double tempValue) {
