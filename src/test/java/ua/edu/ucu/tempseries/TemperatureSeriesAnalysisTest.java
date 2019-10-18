@@ -129,6 +129,56 @@ public class TemperatureSeriesAnalysisTest {
     }
 
     @Test
+    public void testSummaryStatisticsMin() {
+        double[] temperatureSeries = {6, 6, 8, 8};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double expResult = 6;
+
+        TempSummaryStatistics desc = seriesAnalysis.summaryStatistics();
+        assertEquals(expResult, desc.getMin(), 0.0001);
+    }
+
+    @Test
+    public void testSummaryStatisticsMax() {
+        double[] temperatureSeries = {6, 6, 8, 8};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double expResult = 8;
+
+        TempSummaryStatistics desc = seriesAnalysis.summaryStatistics();
+        assertEquals(expResult, desc.getMax(), 0.0001);
+    }
+
+    @Test
+    public void testSummaryStatisticsAvg() {
+        double[] temperatureSeries = {6, 6, 8, 8};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double expResult = 7;
+
+        TempSummaryStatistics desc = seriesAnalysis.summaryStatistics();
+        assertEquals(expResult, desc.getAverage(), 0.0001);
+    }
+
+    @Test
+    public void testSummaryStatisticsDev() {
+        double[] temperatureSeries = {6, 6, 8, 8};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double expResult = 1;
+
+        TempSummaryStatistics desc = seriesAnalysis.summaryStatistics();
+        assertEquals(expResult, desc.getDeviation(), 0.0001);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testStatisticsNone() {
+        double[] temperatureSeries = {};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        double expResult = 1;
+
+        TempSummaryStatistics desc = seriesAnalysis.summaryStatistics();
+        assertEquals(expResult, desc.getDeviation(), 0.0001);
+    }
+
+    @Test
     public void testAddTemps() {
         double[] temperatureSeries = {42, -111, 5, -3};
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);

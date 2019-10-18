@@ -134,7 +134,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TempSummaryStatistics summaryStatistics() {
-        return null;
+        checkEmpty();
+        double avg = average();
+        double deviation = deviation();
+        double minimal = min();
+        double maximal = max();
+        return new TempSummaryStatistics(avg, deviation, minimal, maximal);
     }
 
     public int addTemps(double... temps) {
