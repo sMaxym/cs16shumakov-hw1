@@ -2,16 +2,26 @@ package ua.edu.ucu.tempseries;
 
 public class TemperatureSeriesAnalysis {
 
-    public TemperatureSeriesAnalysis() {
+    private double[] tempSeries;
 
+    public TemperatureSeriesAnalysis() {
+        tempSeries = new double[0];
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-
+        tempSeries = temperatureSeries;
     }
 
     public double average() {
-        return -1;
+        double avg = 0;
+        int seriesLen = tempSeries.length;
+        if (seriesLen == 0){
+            throw new IllegalArgumentException();
+        }
+        for (double val : tempSeries){
+            avg += val;
+        }
+        return avg / seriesLen;
     }
 
     public double deviation() {
