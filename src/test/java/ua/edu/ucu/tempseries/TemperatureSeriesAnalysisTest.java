@@ -103,4 +103,16 @@ public class TemperatureSeriesAnalysisTest {
 
         assertEquals(expResult, actualResult, 0.0001);
     }
+
+    @Test
+    public void testAddTemps() {
+        double[] temperatureSeries = {42, -111, 5, -3};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+        int expResult = 6;
+        double[] toAppend = {2, 0};
+
+        int actualResult = seriesAnalysis.addTemps(toAppend);
+
+        assertEquals(expResult, actualResult);
+    }
 }

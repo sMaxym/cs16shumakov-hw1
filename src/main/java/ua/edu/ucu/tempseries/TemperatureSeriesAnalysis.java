@@ -112,6 +112,17 @@ public class TemperatureSeriesAnalysis {
     }
 
     public int addTemps(double... temps) {
-        return 0;
+        int serLen = tempSeries.length;
+        int tempsLen = temps.length;
+        double[] data = new double[serLen + tempsLen];
+        int index = 0;
+        for (int i = 0; i < serLen; ++i, ++index) {
+            data[index] = tempSeries[i];
+        }
+        for (int j = 0; j < tempsLen; ++j, ++index) {
+            data[index] = temps[j];
+        }
+        tempSeries = data;
+        return serLen + tempsLen;
     }
 }
