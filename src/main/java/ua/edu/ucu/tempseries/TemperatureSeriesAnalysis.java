@@ -12,20 +12,32 @@ public class TemperatureSeriesAnalysis {
         tempSeries = temperatureSeries;
     }
 
-    public double average() {
-        double avg = 0;
+    private void checkEmpty() {
         int seriesLen = tempSeries.length;
-        if(seriesLen == 0){
+        if (seriesLen == 0) {
             throw new IllegalArgumentException();
         }
-        for(double val : tempSeries){
+    }
+
+    public double average() {
+        checkEmpty();
+        double avg = 0;
+        for (double val : tempSeries) {
             avg += val;
         }
-        return avg / seriesLen;
+        return avg / tempSeries.length;
     }
 
     public double deviation() {
-        return 0;
+        checkEmpty();
+        double dev = 0, avg = average();
+        int serLen = tempSeries.length;
+        for (double val: tempSeries) {
+            dev += Math.pow(val - avg, 2);
+        }
+        dev /= serLen;
+        dev = Math.sqrt(dev);
+        return dev;
     }
 
     public double min() {
