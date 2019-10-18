@@ -1,10 +1,10 @@
 package ua.edu.ucu.tempseries;
 
-interface FindingPredicate {
-    boolean compare(double a, double b);
-}
-
 public class TemperatureSeriesAnalysis {
+
+    interface FindingPredicate {
+        boolean compare(double a, double b);
+    }
 
     private double[] tempSeries;
 
@@ -62,7 +62,7 @@ public class TemperatureSeriesAnalysis {
         double dev = 0, avg = average(), curSummon;
         int serLen = tempSeries.length;
         for (double val: tempSeries) {
-            curSummon = Math.pow(val - avg, 2);
+            curSummon = (val - avg) * (val - avg);
             dev += curSummon;
         }
         dev /= serLen;
@@ -95,12 +95,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToValue(double tempValue) {
-        final double anchor = tempValue;
+        final double comparingVal = tempValue;
         FindingPredicate predicate = new FindingPredicate() {
             @Override
             public boolean compare(double a, double b) {
-                double a_diff = Math.abs(a - anchor);
-                double b_diff = Math.abs(b - anchor);
+                double a_diff = Math.abs(a - comparingVal);
+                double b_diff = Math.abs(b - comparingVal);
                 if (a_diff == b_diff && a > b) {
                     return true;
                 }
