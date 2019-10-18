@@ -16,7 +16,7 @@ public class TemperatureSeriesAnalysis {
         tempSeries = temperatureSeries;
     }
 
-    private void checkEmpty() {
+    private void checkEmpty() throws IllegalArgumentException {
         int seriesLen = tempSeries.length;
         if (seriesLen == 0) {
             throw new IllegalArgumentException();
@@ -95,6 +95,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToValue(double tempValue) {
+        checkEmpty();
         final double comparingVal = tempValue;
         FindingPredicate predicate = new FindingPredicate() {
             @Override
