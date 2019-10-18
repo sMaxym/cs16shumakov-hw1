@@ -83,7 +83,7 @@ public class TemperatureSeriesAnalysisTest {
     }
 
     @Test
-    public void testfindTempClosestToZero() {
+    public void testFindTempClosestToZero() {
         double[] temperatureSeries = {42, -111, 5, -3};
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
         double expResult = -3;

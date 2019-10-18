@@ -81,11 +81,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToValue(double tempValue) {
+        final double anchor = tempValue;
         FindingPredicate predicate = new FindingPredicate() {
             @Override
             public boolean compare(double a, double b) {
-                double a_diff = Math.abs(a - tempValue);
-                double b_diff = Math.abs(b - tempValue);
+                double a_diff = Math.abs(a - anchor);
+                double b_diff = Math.abs(b - anchor);
                 if (a_diff == b_diff && a > b) {
                     return true;
                 }
