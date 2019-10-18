@@ -1,6 +1,6 @@
 package ua.edu.ucu.tempseries;
 
-interface FindingPredicat {
+interface FindingPredicate {
     boolean compare(double a, double b);
 }
 
@@ -23,7 +23,7 @@ public class TemperatureSeriesAnalysis {
         }
     }
 
-    private double predicatFinding(FindingPredicat pred) {
+    private double predicateFinding(FindingPredicate pred) {
         checkEmpty();
         double bestValue = tempSeries[0];
         for (double val: tempSeries) {
@@ -57,13 +57,23 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double min() {
-        FindingPredicat pred = (double a, double b) -> (a < b);
-        return predicatFinding(pred);
+        FindingPredicate pred = new FindingPredicate() {
+            @Override
+            public boolean compare(double a, double b) {
+                return a < b;
+            }
+        };
+        return predicateFinding(pred);
     }
 
     public double max() {
-        FindingPredicat pred = (double a, double b) -> (a > b);
-        return predicatFinding(pred);
+        FindingPredicate pred = new FindingPredicate() {
+            @Override
+            public boolean compare(double a, double b) {
+                return a > b;
+            }
+        };
+        return predicateFinding(pred);
     }
 
     public double findTempClosestToZero() {
