@@ -15,10 +15,10 @@ public class TemperatureSeriesAnalysis {
     public double average() {
         double avg = 0;
         int seriesLen = tempSeries.length;
-        if (seriesLen == 0){
+        if(seriesLen == 0){
             throw new IllegalArgumentException();
         }
-        for (double val : tempSeries){
+        for(double val : tempSeries){
             avg += val;
         }
         return avg / seriesLen;
